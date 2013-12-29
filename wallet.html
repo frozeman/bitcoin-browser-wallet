@@ -1,0 +1,228 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Bitcoin Browser Wallet</title>
+        <link rel="stylesheet" type="text/css" href="styles/icons.css">
+        <link rel="stylesheet" type="text/css" href="styles/main.css">
+    </head>
+    <body>
+        <div id="loading">
+            <span class="icon-link"></span>
+        </div>
+
+        
+        <!-- SETUP -->
+        <section id="setup">
+            <section class="form">
+                <label data-i18n="setup.generateNewAddress"><input type="radio" name="createType" class="generatePrivRadio" tabindex="1" checked="checked"></label>
+                <label data-i18n="setup.importPrivateKey"><input type="radio" name="createType" class="importPrivRadio"></label>
+                
+                <input type="text" class="btcAddress importPrivkey" placeholder="5KGMJim4coC9HqZuXw9pNpm8GyVw5tffD2mXEGXUdpBQvzAurw4" spellcheck="false"  tabindex="3">
+                <input type="password" class="password" placeholder="Password" tabindex="4">
+                <input type="password" class="passwordConfirm" placeholder="Confirm password" tabindex="5">
+                <button class="create" tabindex="6" data-i18n="setup.button.create"></button>
+            </section>
+
+            <section class="message">
+                <div class="error runtimeError">
+                    <h2 class="icon-spam" data-i18n="setup.error.runtime.title"></h2>
+                    <p></p>
+                </div>
+                <div class="error passwordMismatch">
+                    <h2 class="icon-spam" data-i18n="setup.error.passwordMismatch.title"></h2>
+                    <p data-i18n="setup.error.passwordMismatch.text"></p>
+                </div>
+                <div class="error invalidPrivateKey">
+                    <h2 class="icon-spam" data-i18n="setup.error.invalidKey.title"></h2>
+                    <p data-i18n="setup.error.invalidKey.text"></p>
+                </div>
+                <div>
+                    <h2 class="icon-info" data-i18n="setup.info.setupHint.title1"></h2>
+                    <p data-i18n="setup.info.setupHint.text1"></p>
+                    <h2 data-i18n="setup.info.setupHint.title2"></h2>
+                    <p data-i18n="setup.info.setupHint.text2"></p>
+                    <h2 data-i18n="setup.info.setupHint.title3"></h2>
+                    <p data-i18n="setup.info.setupHint.text3"></p>
+                </div>
+            </section>
+        </section>
+
+
+        <!-- WALLET -->
+        <section id="wallet">
+
+            <button class="icon settings"><span class="icon-cog"></span></button>
+            
+            <section class="balance">
+                <button class="switchCurrency" tabindex="4">
+                    <span class="number">0.00000000</span>
+                    <span class="symbol">BTC</span>
+                </button>
+                <div class="address">
+                    <span data-i18n="wallet.yourAddress"></span>                    
+                    <a href="#" target="_blank" tabindex="4" class="publicKey"></a>
+                </div>
+            </section>
+
+
+            <section class="form">
+                <input type="text" class="btcAddress" placeholder="17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm" tabindex="1" autofocus="autofocus" spellcheck="false">
+                <input type="number" class="sendAmount" placeholder="0.00000000" step="0.01" min="0" tabindex="2">
+                <input type="text" class="symbol" disabled="disabled" value="BTC">
+                <button class="send" tabindex="3" data-i18n="wallet.button.send"></button>
+            </section>
+
+            <section class="availableAddresses">
+                <h2 data-i18n="wallet.availableAddresses"></h2>
+                <ul>
+                    <!-- Addresses come here -->
+                </ul>
+            </section>
+
+
+            <section class="message">
+
+                <!-- errors -->
+                <div class="error invalidSendAddress">
+                    <h2 class="icon-spam" data-i18n="wallet.error.invalidAddress.title"></h2>
+                    <p data-i18n="wallet.error.invalidAddress.text"></p>
+                </div>
+                <div class="error invalidSendAmount">
+                    <h2 class="icon-spam" data-i18n="wallet.error.invalidAmount.title"></h2>
+                    <p data-i18n="wallet.error.invalidAmount.title"></p>
+                </div>
+                <div class="error transactionFailed">
+                    <h2 class="icon-spam" data-i18n="wallet.error.transactionFailed.title"></h2>
+                    <p data-i18n="wallet.error.transactionFailed.title"></p>
+                </div>
+                <div class="error transactionRequestFailed">
+                    <h2 class="icon-spam" data-i18n="wallet.error.transactionRequestFailed.title"></h2>
+                    <p data-i18n="wallet.error.transactionRequestFailed.title"></p>
+                </div>
+                <div class="error passwordWrong">
+                    <h2 class="icon-spam" data-i18n="wallet.error.passwordWrong.title"></h2>
+                    <p data-i18n="wallet.error.passwordWrong.title"></p>
+                </div>
+
+                <!-- hints -->
+                <div class="noTransaction">
+                    <h2 class="icon-info" data-i18n="wallet.info.noTransaction.title"></h2>
+                    <p data-i18n="wallet.info.noTransaction.text"></p>
+                </div>
+                <div class="noFunds">
+                    <h2 class="icon-info" data-i18n="wallet.info.noFunds.title"></h2>
+                    <p data-i18n="wallet.info.noFunds.text1"></p>
+                    <p data-i18n="wallet.info.noFunds.text2"></p>
+                </div>
+            </section>
+        </section>
+
+
+        <!-- SETTINGS -->
+
+        <section id="settings">
+
+            <button class="icon close"><span class="icon-close"></span></button>
+
+
+            <section class="form">
+                <button class="showKey" data-i18n="settings.button.showPrivateKey"><span class="icon-qrcode"></span></button>
+                <button class="deleteWallet" data-i18n="settings.button.deleteWallet"><span class="icon-spinner2"></span></button>
+            </section>
+
+            <p class="credits" data-i18n="settings.credits"></p>
+
+            <!-- SETTINGS CONFIRM -->
+            <section id="settingsConfirm">
+                <section class="form">
+                    <p class="deleteWalletText" data-i18n="settings.walletWillNotBeDeleted"></p>
+                    <p class="showPrivateKeyText" data-i18n="settings.decryptYourPrivateKey"></p>
+                    <br>
+                    <input type="password" placeholder="Password" class="login" tabindex="6">
+                    <button class="confirm" tabindex="7" data-i18n="button.decrypt"></button>
+                    <button class="cancel" tabindex="8" data-i18n="button.cancel"></button>
+                </section>
+
+                <section class="message">
+                    <div class="error passwordWrong">
+                        <h2 class="icon-spam" data-i18n="wallet.error.passwordWrong.title"></h2>
+                        <p data-i18n="wallet.error.passwordWrong.text"></p>
+                    </div>
+                </section>
+            </section>
+
+            <!-- SHOW PRIVATE KEY -->
+            <section id="showKey">
+                <section class="form">
+
+                    <div class="showKey">
+                        <br><br>
+                        <input type="text" class="btcAddress privKey" disabled="disabled" spellcheck="false">
+                        <p data-i18n="settings.privateKeyInfo"></p>
+                        <button class="ok"  tabindex="7" data-i18n="button.ok"></button>
+                    </div>
+
+                    <div class="deleteWallet">
+                        <p data-i18n="settings.deleteWalletInfoText"></p>
+                        <input type="text" class="btcAddress privKey" disabled="disabled" spellcheck="false">
+                        <br><br>
+                        <button class="confirm" tabindex="7" data-i18n="button.confirm"></button>
+                        <button class="cancel" tabindex="8" data-i18n="button.cancel"></button>
+                    </div>
+                </section>
+
+                <section class="message">
+                    <!-- errors -->
+                    <div class="error deletionFailed">
+                        <h2 class="icon-spam" data-i18n="settings.error.deletionFailed.title"></h2>
+                        <p></p>
+                    </div>
+                </section>
+            </section>
+        </section>
+
+
+
+
+
+        <!-- *** PAYMENT PROCESS *** -->
+
+        <!-- SEND CONFIRM -->
+        <section id="sendConfirm">
+            <section class="form">
+                <p>
+                    <span data-i18n="sendConfirm.sendText"></span>
+                    <br>
+                    <a href="#" class="address" target="_blank"></a>
+                    <br>
+                    <small data-i18n="sendConfirm.feeHint"></small>
+                </p>
+                <input type="password" placeholder="Password" class="login" tabindex="6">
+                <button class="confirm" tabindex="7" data-i18n="button.confirm"></button>
+                <button class="cancel" tabindex="8" data-i18n="button.cancel"></button>
+            </section>
+        </section>
+
+
+        <!-- SUCCESS -->
+        <section id="success">
+            <h2 class="icon-checkmark"></h2>
+            <p>
+                <span data-i18n="success.transactionId"></span> <a href="" class="transactionId" target="_blank"></a>
+            </p>
+            <button class="ok">OK</button>
+        </section>
+
+
+
+
+        <script src="lib/js/vendor/underscore-min.js"></script>
+        <script src="lib/js/vendor/jquery-2.0.3.min.js"></script>
+        <script src="lib/js/vendor/bitcoinjs-min.js"></script>
+        <script src="lib/js/vendor/sha256.js"></script>
+        <script src="lib/js/vendor/aes.js"></script>
+        <script src="lib/js/i18n.js"></script>
+        <script src="lib/js/wallet.js"></script>
+    </body>
+</html>
+

@@ -1,0 +1,233 @@
+
+#loading {
+    display: none;
+    z-index: 40;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: fadeout(@bgColorTransparent,20%);
+
+    span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -@fontSizeLarge;
+        margin-left: -@fontSizeLarge;
+        display: inline-block;
+        .animation(rotate 1s alternate infinite);
+        font-size: @fontSizeLarge * 2;
+    }
+}
+
+// SECTIONS
+#setup,
+#wallet,
+#settings,
+#sendConfirm,
+#success,
+#settingsConfirm,
+#showKey {
+    z-index: 1;
+    position: relative;
+    display: none;
+    background-color: #fff;
+}
+
+
+#setup {
+    .importPrivkey {
+        display: none;
+    }
+}
+
+#settings {
+    padding: @padding @padding * 2;
+
+    p.credits {
+        font-size: @fontSizeSmall - 1;
+    }
+
+
+    button.close {
+        z-index: 2;
+        position: absolute;
+        top: @padding/2;
+        right: @padding/2;
+    }
+
+    > section.form {
+        padding-top: 30px;
+    
+        > button {
+            font-size: 16px;
+
+            margin-right: @padding;
+        }
+    }
+}
+
+#sendConfirm,
+#success,
+#settingsConfirm,
+#showKey {
+    z-index: 30;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: @padding / 2  @padding * 2;
+    background-color: #fff;
+}
+
+#settingsConfirm {
+    padding-top: @padding * 2;
+
+    .form > p {
+        margin: 4px 0;
+
+        &.deleteWalletText,
+        &.showPrivateKeyText {
+            display: none;
+        }
+    }
+}
+#showKey {
+    z-index: 31;
+
+    .privKey {
+        width: 105%;
+        margin: 0 -@padding - 2;
+        padding: @padding * 2 0;
+        text-align: center;
+        background-color: #333;
+        color: #fff;
+        border: none;
+    }
+
+    .showKey,
+    .deleteWallet {
+        display: none;
+        color: #ae543a;
+    }
+}
+
+#sendConfirm {
+
+    p {
+        line-height: @fontSizeMedium + 4;
+        margin: 8px 0;
+
+        small {
+            line-height: @fontSizeMedium - 4;
+            color: #ddd;
+        }
+    }
+
+    .amount,
+    .address {
+        font-weight: 400;
+    }
+    .amount {
+        font-size: @fontSizeLarge;
+    }
+}
+
+#success {
+    z-index: 32;
+    background-color: @bgColorTransparent;
+    text-align: center;
+
+    h2 {
+        font-size: @fontSizeLarge * 1.8;
+        color: #88bd4b;
+        padding: 0;
+    }
+    p {
+        margin: @padding 0;
+        padding: @padding / 2;
+        background-color: #fff;
+        font-size: @fontSizeSmall - 2;
+        color: #999;
+        .border-radius(4px);
+    }
+
+    .transactionId {
+        display: inline-block;
+        width: 100%;
+        -o-text-overflow: ellipsis;   /* Opera */
+        text-overflow:    ellipsis;   /* IE, Safari (WebKit) */
+        overflow:hidden;              /* don't show excess chars */
+        white-space: nowrap;
+    }
+}
+
+
+
+#wallet {
+
+    button.settings {
+        z-index: 20;
+        position: absolute;
+        top: @padding/2;
+        right: @padding/3;
+    }
+
+    .balance {
+        position: relative;
+        padding: @padding;
+        width: @width - @padding * 2;
+        text-align: left;
+        font-family: 'Helvetica Neue', Helvetica, Arial, Verdana;
+
+
+        button.switchCurrency {
+            background: none;
+            border: none;
+            outline: 0;
+            color: #111;
+            // border: 1px solid transparent;
+            .border-radius(4px);
+
+            &:focus {
+                // border: 1px solid lighten(@tintColor,40%);
+            }
+        }
+
+        span.number {
+            font-size: 40px;
+            font-weight: 100;
+            
+        }
+        span.symbol {
+            font-size: 12px;
+            font-weight: 200;
+        }
+        div.address {
+            position: absolute;
+            right: @padding;
+            top: @padding * 2.6;
+            text-align: right;
+            font-family: @standardFont;
+
+            font-size: 10px;
+            color: @greyColor;
+
+            > span {
+                .user-select(none);
+            }
+
+            a,
+            a:visited {
+                color: @greyColor;
+
+                &:focus,
+                &:hover {
+                    color: @tintColor;
+                }
+            }
+        }
+    }
+}

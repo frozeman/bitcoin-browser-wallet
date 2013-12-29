@@ -1,0 +1,247 @@
+@width: 500px;
+@padding: 10px;
+@tintColor: #eb8833;
+@greyColor: #b9b9b9;
+@bgColor: #f6f6f6;
+@bgColorTransparent: fadeout(#f6f6f6, 5%);
+@fontSizeLarge: 20px;
+@fontSizeMedium: 18px;
+@fontSizeSmall: 14px;
+@standardFont: Helvetica, Arial, Verdana;
+@monospacefont: "Courier New", Courier, monospace;
+
+
+body {
+    width: @width;
+    background-color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, Verdana;
+}
+
+
+a,
+a:visited {
+    text-decoration: none;
+    color: @tintColor;
+
+    &:focus,
+    &:hover {
+        color: #111;
+    }
+}
+
+h2 {
+    font-size: @fontSizeMedium;
+    font-weight: 200;
+    margin: 0;
+    padding: @padding @padding/4;
+    padding-bottom: @padding/8;
+    font-family: @standardFont;
+}
+
+p {
+    font-family: @standardFont;
+    font-weight: 200;
+}
+
+button {
+    .button;
+
+    > span {
+        position: relative;
+        top: 1px;
+    }
+
+    &.ok {
+        width: 100px;
+        .button;
+    }
+}
+button.icon {
+    background-color: transparent;
+    color: @greyColor;
+    font-size: 16px;
+
+    &:focus,
+    &:hover {
+        color: @tintColor;
+    }
+}
+
+
+.form {
+    z-index: 1;
+    position: relative;
+    // padding: 50px;
+    left: 0;
+
+    label {
+        display: inline-block;
+        padding: @padding;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="password"] {
+        position: relative;
+        width: 100%;
+        margin-top: -1px;
+        border: 1px solid #ccc;
+        background-color: none;
+        padding: @padding/2 @padding;
+        outline: 0;
+        color: @tintColor;
+        font-family: 'Helvetica Neue', Helvetica, Arial, Verdana;
+        font-size: 20px;
+        font-weight: 100;
+        .box-sizing(border-box);
+    }
+    input:focus {
+        z-index: 25;
+        border-color: @tintColor;
+        // color: @tintColor;
+    }
+    input.importPrivkey,
+    input.privKey {
+        font-size: @fontSizeSmall + 1;
+    }
+    input.btcAddress {
+        font-family: @monospacefont;
+        font-weight: 100;
+    }
+    input.sendAmount,
+    input.passwordConfirm,
+    input.login {
+        width: 65%;
+        float: left;
+    }
+    input.passwordConfirm {
+        width: 80%;
+    }
+    input.symbol {
+        width: 15%;
+        float: left;
+        border-left: none;
+        text-align: center;
+        color: #fff;
+        background-color: #d0d0d0;
+    }
+    input.login {
+        width: 50%;
+    }
+    button {
+        text-align: center;
+    }
+    button {
+        .button;
+        z-index: 5;
+        position: relative;
+        width: 20.1%;
+        font-size: 20px;
+        padding: @padding/2 + 1 @padding;
+        margin-top: -1px;
+        margin-left: -1px;
+    }
+    button.confirm {
+        width: 25%;
+    }
+    button.cancel {
+        width: 24%;
+        float: right;
+    }
+    button.showKey,
+    button.deleteWallet {
+        width: auto;
+    }
+}
+
+.availableAddresses {
+    position: relative;
+    // margin-top: 1px;
+    display: none;
+    padding: @padding;
+    background-color: darken(@bgColor, 5%);
+
+    h2 {
+        color: darken(@bgColor, 40%);
+        margin-bottom: @padding / 2;
+    }
+
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        padding-bottom: 1px;
+
+        > li {
+            // float: left;
+
+            button {
+                display: block;
+                margin: 2px;
+                .button;
+                padding: @padding/4 @padding/2;
+                border-radius: 4px;
+
+                span:first-child {
+                    font-size: 16px;
+                }
+
+                span.text {
+                    position: relative;
+                    top: -1px;
+                    font-family: @monospacefont;
+                    font-size: @fontSizeSmall;
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+}
+
+
+.message {
+    @messageColor: #3f9ddf;
+    background-color: lighten(@messageColor, 10%);
+    font-size: @fontSizeSmall;
+    line-height: @fontSizeSmall + 6;
+    font-family: @standardFont;
+
+    div.noFunds,
+    div.noTransaction,
+    div.error {
+        display: none;
+    }
+
+    div.error {
+        h2,
+        p {
+            background-color: #d55431;
+        }
+    }
+
+    h2,
+    p {
+        margin: 0;
+        padding: @padding;
+        color: #fff;
+    }
+    h2 {
+        padding-bottom: 0;
+    }
+    a,
+    a:visited {
+        color: #f3f3f3;
+
+        &:hover,
+        &:focus {
+            color: lighten(@tintColor, 20%);
+        }
+    }
+
+    ::selection {
+        background: @tintColor;
+    }
+    ::-moz-selection {
+        background: @tintColor;
+    }
+}
