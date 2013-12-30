@@ -825,13 +825,18 @@ button.icon:hover {
 #settings {
   padding: 10px 20px;
 }
+#settings > h2 {
+  padding: 0;
+  margin: 0;
+  margin-top: 30px;
+}
 #settings p.credits {
   font-size: 13px;
 }
 #settings button.close {
   z-index: 2;
   position: absolute;
-  top: 5px;
+  top: 10px;
   right: 5px;
 }
 #settings > section.form {

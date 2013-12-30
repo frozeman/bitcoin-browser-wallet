@@ -18,7 +18,7 @@
     "https://blockchain.info/merchant/*/*"
   ],
   "background": {
-    "scripts": ["lib/js/background.js"]
+    "scripts": ["js/background.js"]
   },
   "browser_action": {
     "default_icon": "icon128.png",
