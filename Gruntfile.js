@@ -18,7 +18,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['js/**/*.js','!js/background.js'],
+        src: ['js/**/*.js','!js/background.js','!js/addressFetcher.js'],
         dest: 'build/<%= pkg.name %>.js'
       }
     },
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
           // includes files within path
           {expand: true, src: ['*','!Gruntfile.js','!package.json','!karma.conf.js'], dest: 'dist/', filter: 'isFile'},
           {expand: true, cwd: 'build/', src: ['bitcoin-browser-wallet.min.js'], dest: 'dist/js/'},
-          {expand: true, src: ['js/vendor/*','js/background.js','styles/*','icons/*'], dest: 'dist/', filter: 'isFile'},
+          {expand: true, src: ['js/vendor/*','js/background.js','js/addressFetcher.js','styles/*','icons/*'], dest: 'dist/', filter: 'isFile'},
         ]
       }
     },

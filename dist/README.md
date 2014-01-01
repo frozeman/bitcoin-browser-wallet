@@ -2,7 +2,10 @@ Bitcoin Browser Wallet
 Copyright by Fabian Vogelsteller [frozeman.de]
 ======================
 
-A simple bitcoin wallet for the browser (Currently Chrome).
+A simple bitcoin wallet for your browser (Currently Chrome).
+
+The Bitcoin Browser Wallet lets you easily send payments to anybody right from your browser. It detects bitcoin links on websites you're on to make payments fast and easy.
+Your private key will be encrypted using your password and stored in Googles Sync storage, so you can access your wallet from any chrome browser.
 
 This wallet uses the blockchain.info APIs for sending payments and retrieving balances.
 The generated/imported private key is encrypted using a password and stored in the chrome sync/local storage

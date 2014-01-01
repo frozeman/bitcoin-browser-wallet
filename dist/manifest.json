@@ -3,7 +3,7 @@
 
   "name": "Bitcoin Browser Wallet",
   "short_name": "BTC Wallet",
-  "description": "A simple to use bitcoin browser wallet",
+  "description": "A simple bitcoin wallet for your browser.",
   "version": "0.1",
   "icons": {
       "16": "icon16.png",
