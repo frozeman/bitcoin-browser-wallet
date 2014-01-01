@@ -656,14 +656,6 @@ button.icon:hover {
 .form input.passwordConfirm {
   width: 80%;
 }
-.form input.symbol {
-  width: 15%;
-  float: left;
-  border-left: none;
-  text-align: center;
-  color: #fff;
-  background-color: #d0d0d0;
-}
 .form input.login {
   width: 45%;
 }
@@ -689,6 +681,20 @@ button.icon:hover {
 .form button:focus {
   z-index: 100;
   color: #222;
+}
+.form button.symbol {
+  width: 15%;
+  padding: 5px 10px;
+  margin: 0;
+  margin-top: -1px;
+  border: 1px solid #ccc;
+  float: left;
+  border-left: none;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  background-color: #d0d0d0;
+  cursor: pointer;
 }
 .form button.send {
   font-size: 20px;

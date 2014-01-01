@@ -762,7 +762,7 @@ var showWallet = function(){
         hideWallet();
     });
     // switch displayed currency
-    $wallet.find('button.switchCurrency').on('click', function(){
+    $wallet.find('button.switchCurrency, button.symbol').on('click', function(){
         bStore.displayUSD  = (bStore.displayUSD) ? false : true;
         displayBalance();
         getPriceIndex();
@@ -1062,13 +1062,13 @@ var displayBalance = function(){
     if(bStore.displayUSD) {
         $wallet.find('.balance .number').text(inUSD(bStore.balance));
         $wallet.find('.balance .symbol').text('USD');
-        $wallet.find('input.symbol').val('USD');
+        $wallet.find('button.symbol').text('USD');
         $wallet.find('input.sendAmount').attr('placeholder','0.00');
         $wallet.find('input.sendAmount').attr('step','0.01');
     } else {
         $wallet.find('.balance .number').text(bStore.balance);
         $wallet.find('.balance .symbol').text('BTC');
-        $wallet.find('input.symbol').val('BTC');
+        $wallet.find('button.symbol').text('BTC');
         $wallet.find('input.sendAmount').attr('placeholder','0.00000000');
         $wallet.find('input.sendAmount').attr('step','0.001');
     }
