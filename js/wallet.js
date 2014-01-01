@@ -49,7 +49,12 @@ $.getJSON('https://raw.github.com/frozeman/bitcoin-browser-wallet/master/manifes
 });
 
 
-// dead simple i18n
+
+/**
+* A very simple self made localization function.
+* uses the imported i18n.js file and displays the lang strings.
+*
+*/
 var addI18n = function(lang){
     $('*[data-i18n]').each(function(){
         var key = $(this).data('i18n').split('.');
@@ -63,7 +68,7 @@ var addI18n = function(lang){
             $(this).append(i18n[lang][key[0]][key[1]][key[2]][key[3]]);
     });
 };
-var lang = (navigator.language.substr(0,2) === 'de')? navigator.language.substr(0,2) : 'en';
+var lang = (navigator.language.substr(0,2) === 'de')? 'de' : 'en';
 addI18n(lang);
 
 
@@ -82,7 +87,13 @@ cStore.get(['privateKey','publicKey','firstSend'], function(store){
 
 
 
-// SETUP
+/**
+* SETUP
+*
+* Will generate or import a private and public key for the wallet
+* and encrypt it using a user choosen password.
+*
+*/
 var showSetup = function(){
     var importPrivKey = false,
         $setup = $('#setup'),
@@ -186,8 +197,13 @@ var hideSetup = function(){
 
 
 
-// SETTINGS
 
+/**
+* SETTINGS
+*
+* Allow the user to display his private key and delete teh wallet.
+* Will also display the wallets version and credits.
+*/
 var showSettings = function(){
     var $settings = $('#settings'),
         $showKey = $('#showKey'),
@@ -338,8 +354,12 @@ var hideSettings = function(){
 
 
 
-// WALLET
-
+/**
+* WALLET
+*
+* Displays the user wallet balance and 
+* lets the user send bitcoin to other addresses.
+*/
 var showWallet = function(){
     var $wallet = $('#wallet'),
         $sendAddress = $wallet.find('.btcAddress'),
@@ -479,7 +499,8 @@ var showWallet = function(){
         $wallet.find('.error').hide();
 
         if(validateAddress(address)) {
-            if(_.isFinite(amount) && amount !== 0) {
+
+            if(_.isFinite(amount) && amount != 0) {
 
                 // show password form
                 showSendConfirm(address, amount);
@@ -506,6 +527,12 @@ var hideWallet = function(){
 };
 
 
+
+/**
+* SEND CONFIRM
+*
+* This includes various checks and a confirmation page which is shown before the user finally sends his funds.
+*/
 var showSendConfirm = function(address, amount){
     var $sendConfirm = $('#sendConfirm');
 
@@ -551,7 +578,6 @@ var showSendConfirm = function(address, amount){
 
                 bStore.paymentInProcess = true;
                 $('#loading').show();
-
 
                 // -> SEND TRANSACTION VIA BLOCKCHAIN.INFO
                 $.ajax({
@@ -621,6 +647,12 @@ var hideSendConfirm = function(){
     $sendConfirm.hide();
 };
 
+
+/**
+* SUCCESS PAGE
+*
+* Shows the success page to after successfully send an transaction.
+*/
 var showSuccess = function(txHash){
     var $success = $('#success');
 
@@ -650,6 +682,11 @@ var hideSuccess = function(){
 
 // METHODS
 
+
+/**
+* Retrives the balance of the users address.
+*
+*/
 var getBalance = function(){
 
     return $.ajax({
@@ -667,6 +704,10 @@ var getBalance = function(){
     });
 };
 
+/**
+* Retrives the current price for 1 bitcoin in USD from bitstamp.net.
+*
+*/
 var getPriceIndex = function(){
 
     return $.ajax({
@@ -678,6 +719,11 @@ var getPriceIndex = function(){
     });
 };
 
+
+/**
+* Displays the balance in either BTC or USD
+*
+*/
 var displayBalance = function(){
     var $wallet = $('#wallet');
 
@@ -713,18 +759,35 @@ var displayBalance = function(){
     $wallet.find('button.switchCurrency').attr('title','Bitstamp: '+ bStore.currentPrice +' USD/BTC');
 };
 
-var inUSD = function(amount){
-    return Math.round((amount * bStore.currentPrice) * 100) / 100;
+/**
+* Changes BTC into USD
+*
+*/
+var inUSD = function(btc){
+    return Math.round((btc * bStore.currentPrice) * 100) / 100;
 };
 
-var inBTC = function(amount){
-    return Math.round((amount / bStore.currentPrice) * DECIMAL_POINTS) / DECIMAL_POINTS;
+/**
+* Changes USD into BTC
+*
+*/
+var inBTC = function(fiat){
+    return Math.round((fiat / bStore.currentPrice) * DECIMAL_POINTS) / DECIMAL_POINTS;
 };
 
-var roundBTC = function(amount){
-    return Math.round((amount) * DECIMAL_POINTS) / DECIMAL_POINTS;
+/**
+* Makes sure that BTC will "only" have 8 decimal points.
+*
+*/
+var roundBTC = function(btc){
+    return Math.round((btc) * DECIMAL_POINTS) / DECIMAL_POINTS;
 };
 
+
+/**
+* Generates a bitcoin Private Key
+*
+*/
 var generatePrivKey = function(){
     var randArr = new Uint8Array(32); //create a typed array of 32 bytes (256 bits)
     window.crypto.getRandomValues(randArr); //populate array with cryptographically secure random numbers
@@ -753,6 +816,10 @@ var generatePrivKey = function(){
     };
 };
 
+/**
+* Gets the public key from a private key
+*
+*/
 var getPublicKey = function(privKey){
 
     try { 
@@ -763,6 +830,10 @@ var getPublicKey = function(privKey){
     };
 };
 
+/**
+* Generates the public key from a private keys bytes
+*
+*/
 var generatePublicKey = function(privateKeyBytes){
     //privateKeyBytes is the private key array from the top
     var eckey = new Bitcoin.ECKey(privateKeyBytes);
@@ -770,6 +841,10 @@ var generatePublicKey = function(privateKeyBytes){
     return eckey.getBitcoinAddress().toString();
 };
 
+/**
+* Parses a Base58 key and validates it.
+*
+*/
 var parseBase58Check = function(address) {
     var bytes = Bitcoin.Base58.decode(address);
     var end = bytes.length - 4;
@@ -784,7 +859,10 @@ var parseBase58Check = function(address) {
     return [version, hash];
 };
 
-
+/**
+* Validates a bitcoin address (public key)
+*
+*/
 var validateAddress = function(address){
     try {
         Bitcoin.Address(address);

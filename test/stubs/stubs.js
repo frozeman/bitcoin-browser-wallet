@@ -28,7 +28,7 @@ chrome = {
 
 
 // jquery stubs
-var $, jQuery;
+var $, jQueryStub;
 
 (function () {
     "use strict";
@@ -36,10 +36,10 @@ var $, jQuery;
     var emptyFunction = function () {
     };
 
-    var JQuery = function () {
+    jQueryStub = function () {
     };
 
-    JQuery.prototype = {
+    jQueryStub.prototype = {
         onEventMap: {},
         ready: emptyFunction,
         show: emptyFunction,
@@ -49,11 +49,10 @@ var $, jQuery;
         each: emptyFunction,
         attr: emptyFunction,
         done: emptyFunction,
-        ajax: function(){
-            return {
-                done: emptyFunction
-            };
-        },
+        hide: emptyFunction,
+        focus: emptyFunction,
+        off: emptyFunction,
+        length: 0,
         text: function(){
             return {
                 attr: emptyFunction
@@ -61,22 +60,22 @@ var $, jQuery;
         },
         html: emptyFunction,
         find: function(){
-            return new JQuery();
+            return new jQueryStub();
         },
         on: function (eventKey, eventFunction) {
-            JQuery.prototype.onEventMap[eventKey] = eventFunction;
+            jQueryStub.prototype.onEventMap[eventKey] = eventFunction;
 
         },
         fireOnEvent: function (key, eventObject) {
-            JQuery.prototype.onEventMap[key](eventObject);
+            jQueryStub.prototype.onEventMap[key](eventObject);
         },
         trigger: function(eventKey){
-            JQuery.prototype.onEventMap[eventKey]();
+            jQueryStub.prototype.onEventMap[eventKey]();
         },
         fn: {},
         addedClasses: [],
         addClass: function (className) {
-            JQuery.prototype.addedClasses.push(className);
+            jQueryStub.prototype.addedClasses.push(className);
         },
         data: function() {
             return {
@@ -88,12 +87,16 @@ var $, jQuery;
         width: function() {
         }
     };
-    jQuery = new JQuery();
 
     $ = function () {
-        return jQuery;
+        return new jQueryStub();
     };
 
-})();
+    $.ajax = function(){
+        return {
+            done: emptyFunction
+        };
+    };
+    $.getJSON = emptyFunction;
 
-$.getJSON = emptyFunction;
+})();

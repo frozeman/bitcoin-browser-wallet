@@ -665,7 +665,7 @@ button.icon:hover {
   background-color: #d0d0d0;
 }
 .form input.login {
-  width: 50%;
+  width: 45%;
 }
 .form button {
   text-align: center;
@@ -680,8 +680,8 @@ button.icon:hover {
   z-index: 5;
   position: relative;
   width: 20.1%;
-  font-size: 20px;
-  padding: 6px 10px;
+  font-size: 16px;
+  padding: 9px 10px;
   margin-top: -1px;
   margin-left: -1px;
 }
@@ -690,8 +690,12 @@ button.icon:hover {
   z-index: 100;
   color: #222;
 }
+.form button.send {
+  font-size: 20px;
+  padding: 6px 10px;
+}
 .form button.confirm {
-  width: 25%;
+  width: 30%;
 }
 .form button.cancel {
   width: 24%;
@@ -770,13 +774,13 @@ button.icon:hover {
 }
 .message a,
 .message a:visited {
-  color: #f3f3f3;
+  color: #444;
 }
 .message a:hover,
 .message a:visited:hover,
 .message a:focus,
 .message a:visited:focus {
-  color: #f4be90;
+  color: #a85610;
 }
 .message ::selection {
   background: #eb8833;

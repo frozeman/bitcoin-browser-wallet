@@ -126,7 +126,7 @@ button.icon {
         background-color: #d0d0d0;
     }
     input.login {
-        width: 50%;
+        width: 45%;
     }
     button {
         text-align: center;
@@ -136,13 +136,17 @@ button.icon {
         z-index: 5;
         position: relative;
         width: 20.1%;
-        font-size: 20px;
-        padding: @padding/2 + 1 @padding;
+        font-size: 16px;
+        padding: 9px @padding;
         margin-top: -1px;
         margin-left: -1px;
     }
+    button.send {
+        font-size: 20px;
+        padding: @padding/2 + 1 @padding;
+    }
     button.confirm {
-        width: 25%;
+        width: 30%;
     }
     button.cancel {
         width: 24%;
@@ -230,11 +234,11 @@ button.icon {
     }
     a,
     a:visited {
-        color: #f3f3f3;
+        color: #444;
 
         &:hover,
         &:focus {
-            color: lighten(@tintColor, 20%);
+            color: darken(@tintColor, 20%);
         }
     }
 
