@@ -35,7 +35,7 @@ var bStore = chrome.extension.getBackgroundPage().storage,
     intervals = {};
     encryptedPrivateKey = '',
     publicKey = '',
-    firstSend = true,
+    firstSend = false,
     version = null,
     remoteVersion = null;
 
@@ -157,7 +157,7 @@ var showSetup = function(){
 
                         chrome.runtime.lastError = null;
                         cStore.set({
-                            firstSend: firstSend,
+                            firstSend: false,
                             privateKey: privKey,
                             publicKey: pubKey
                         }, function(){
@@ -216,7 +216,7 @@ var showSettings = function(){
     // show version
     // TODO: show update note??
     $settings.find('.version').text(version);
-    if(version !== remoteVersion)
+    if(version < remoteVersion)
         $settings.find('.version').append(' <small>('+ remoteVersion +' <a href="http://frozeman.de" target="_blank">update available</a>)</small>');
 
 
@@ -611,8 +611,10 @@ var showSendConfirm = function(address, amount){
                         // store first send done
                         chrome.runtime.lastError = null;
                         cStore.set({ firstSend: true }, function(){
-                            if(!chrome.runtime.lastError)
-                                $wallet.find('.noTransaction').hide();
+                            if(!chrome.runtime.lastError) {
+                                firstSend = false;
+                                displayBalance();
+                            }
                         });
 
                     // show ERROR
@@ -741,6 +743,9 @@ var displayBalance = function(){
     // -> display message 
     if(bStore.balance && !firstSend)
         $wallet.find('.noTransaction').show();
+    else
+        $wallet.find('.noTransaction').hide();
+
 
     // display USD or BTC
     if(bStore.displayUSD) {
