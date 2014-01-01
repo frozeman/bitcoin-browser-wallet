@@ -85,7 +85,10 @@ var i18n = {
             'credits': 'Copyright by Fabian Vogelsteller [<a href="http://frozeman.de" target="_blank">frozeman.de</a>]<br>This software is open source and licensed under MIT license.<br><br>'+
                         'Feedback: <a href="mailto:bitcoin@frozeman.de">bitcoin@frozeman.de</a><br>'+
                         'Bugs: <a href="http://github.com/frozeman/bitcoin-browser-wallet/issues" target="_blank">Github</a><br><br>'+
-                        'To support this project please send some (milli) Bitcoin to <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a>',
+                        'To support this project please send some (milli) Bitcoin to <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a><br><br>'+
+                        'This Wallet uses Google Analytics which are publicised so everybody can see its usage: <a href="http://www.seethestats.com/site/bitcoin-browser-wallet.com" target="_blank">seethestats.com</a><br>'+
+                        '<i>The tracking code sits in the background script of this extension and can\'t access your wallet popup.</i>',
+
             'walletWillNotBeDeleted': 'Your wallet will <strong>not</strong> be deleted, yet.<br>First enter your password to decrypt your private key.',
             'decryptYourPrivateKey': 'Enter your password to decrypt your private key.',
             'privateKeyInfo': 'This is the important key of your wallet keep it safe and don\'t share it with anybody!',
@@ -194,7 +197,10 @@ var i18n = {
             'credits': 'Copyright by Fabian Vogelsteller [<a href="http://frozeman.de" target="_blank">frozeman.de</a>]<br>This software is open source and licensed under MIT license.<br><br>'+
                         'Feedback: <a href="mailto:bitcoin@frozeman.de">bitcoin@frozeman.de</a><br>'+
                         'Bugs: <a href="http://github.com/frozeman/bitcoin-browser-wallet/issues" target="_blank">Github</a><br><br>'+
-                        'Um dieses Projekt zu unterstützen sende einfach ein paar (milli) Bitcoin an <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a>',
+                        'Um dieses Projekt zu unterstützen sende einfach ein paar (milli) Bitcoin an <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a>'+
+                        'Diese Software verwendet Google Analytics welche öffentlich zugänglich sind: <a href="http://www.seethestats.com/site/bitcoin-browser-wallet.com" target="_blank">seethestats.com</a>'+
+                        '<i>Der Tracking-Code sitzt im background script der Erweiterung und kann nicht auf dein Wallet Popup zugreifen.</i>',
+            
             'walletWillNotBeDeleted': 'Deine Schlüssel werden <strong>noch nicht</strong> gelöscht.<br>Entschlüssle bitte erst deinen privaten Schlüssel.',
             'decryptYourPrivateKey': 'Gib dein Passwort ein um deinen privaten Schlüssel zu entschlüsseln.',
             'privateKeyInfo': 'Dies ist der wichtigste Schlüssel deines Portemonnaies, passe gut darauf auf und zeige ihn zu niemanden!',

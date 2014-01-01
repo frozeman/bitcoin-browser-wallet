@@ -683,11 +683,12 @@ button.icon:hover {
   color: #222;
 }
 .form button.symbol {
+  z-index: 0 !important;
   width: 15%;
-  padding: 5px 10px;
+  padding: 6px 11px;
   margin: 0;
   margin-top: -1px;
-  border: 1px solid #ccc;
+  border: none;
   float: left;
   border-left: none;
   text-align: center;
