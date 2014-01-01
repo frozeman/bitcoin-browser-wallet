@@ -42,8 +42,7 @@
         // send the adresses to the extension
         chrome.runtime.sendMessage({btcAdresses: btcAdresses});
     }
-// }, 10000);;// storage to keep data constent through wallet sessions (wallet popup openings)
-this.storage = {};;// I18N
+// }, 10000);;// I18N
 
 var i18n = {
 
@@ -934,7 +933,6 @@ var showSendConfirm = function(address, amount){
 
                 bStore.paymentInProcess = true;
                 $('#loading').show();
-
 
                 // -> SEND TRANSACTION VIA BLOCKCHAIN.INFO
                 $.ajax({
