@@ -528,7 +528,7 @@ var showSettings = function(){
     // TODO: show update note??
     $settings.find('.version').text(version);
     if(version < remoteVersion)
-        $settings.find('.version').append(' <small>('+ remoteVersion +' <a href="http://frozeman.de" target="_blank">update available</a>)</small>');
+        $settings.find('.version').append(' <small>('+ remoteVersion +' <a href="https://chrome.google.com/webstore/detail/bitcoin-browser-wallet/liopgbfpkngindhbgplllgjhfpcfnmig" target="_blank">update available</a>)</small>');
 
 
     // ATTACH EVENTS

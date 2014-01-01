@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
 
-  "name": "Bitcoin Browser Wallet",
+  "name": "Bitcoin Browser Wallet Dev",
   "short_name": "BTC Wallet",
   "description": "A simple bitcoin wallet for your browser.",
   "version": "0.1.1",

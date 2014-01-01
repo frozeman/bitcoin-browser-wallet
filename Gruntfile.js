@@ -59,6 +59,14 @@ module.exports = function(grunt) {
           from: '<script src="js/wallet.js"></script>',
           to: '' 
         }]
+      },
+      distManifest: {
+        src: ['dist/manifest.json'],
+        dest: 'dist/manifest.json',
+        replacements: [{ 
+          from: 'Bitcoin Browser Wallet Dev',
+          to: 'Bitcoin Browser Wallet' 
+        }]
       }
     }
   });
@@ -71,6 +79,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['concat', 'uglify','watch']);
-  grunt.registerTask('dist',['concat', 'uglify','clean:dist','copy:dist','replace:dist']);
+  grunt.registerTask('dist',['concat', 'uglify','clean:dist','copy:dist','replace:dist','replace:distManifest']);
 
 };
