@@ -923,7 +923,7 @@ var showSendConfirm = function(address, amount){
                         chrome.runtime.lastError = null;
                         cStore.set({ firstSend: true }, function(){
                             if(!chrome.runtime.lastError) {
-                                firstSend = false;
+                                firstSend = true;
                                 displayBalance();
                             }
                         });
