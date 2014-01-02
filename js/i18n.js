@@ -82,7 +82,7 @@ var i18n = {
             }
         },
         'settings': {
-            'credits': 'Copyright by Fabian Vogelsteller [<a href="http://frozeman.de" target="_blank">frozeman.de</a>]<br>This software is open source and licensed under MIT license.<br><br>'+
+            'credits': 'Copyright by Fabian Vogelsteller [<a href="http://frozeman.de" target="_blank">frozeman.de</a>]<br>This software is open source and licensed under the MIT license.<br><br>'+
                         'Feedback: <a href="mailto:bitcoin@frozeman.de">bitcoin@frozeman.de</a><br>'+
                         'Bugs: <a href="http://github.com/frozeman/bitcoin-browser-wallet/issues" target="_blank">Github</a><br><br>'+
                         'To support this project please send some (milli) Bitcoin to <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a><br><br>'+
