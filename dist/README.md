@@ -13,6 +13,22 @@ This wallet uses the blockchain.info APIs for sending payments and retrieving ba
 The generated/imported private key is encrypted using a password and stored in the chrome sync/local storage
 
 
+Install
+-------
+
+Simply go to the Chrome web-store[1] an click "add" 
+
+ [1]: https://chrome.google.com/webstore/detail/bitcoin-browser-wallet/liopgbfpkngindhbgplllgjhfpcfnmig
+
+To install Manually:
+
+*   download the wallet code from [github][2].
+*   Open chrome settings -> extensions
+*   check developer mode
+*   click "load unpacked extension"
+*   select either the "bitcoin-browser-wallet" folder, or the "dist" folder inside. ("dist" is the folder created when you run "$ grunt dist", which concatenates all js files)
+
+ [2]: http://github.com/frozeman/bitcoin-browser-wallet
 
 Tests
 -----
