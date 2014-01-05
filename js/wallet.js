@@ -12,7 +12,7 @@
 
 // CONSTANTS
 var DECIMAL_POINTS = 100000000,
-    TRANSACTION_FEE = 0.0001;
+    TRANSACTION_FEE = 0.0001; // will be add by blockchain.info, this value here is only for display reasons
 
 // VARS
 var bStore = chrome.extension.getBackgroundPage().storage,
