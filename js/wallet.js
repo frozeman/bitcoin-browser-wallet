@@ -6,21 +6,6 @@
 // it under the terms of the MIT license.
 
 
-    // "http://*/",
-    // "https://*/",
-    // "tabs",  
-    // "http://*/*",
-    // "https://*/*",
-
-  // "content_scripts": [
-  //   {
-  //     "matches": ["http://*/*","https://*/*"],
-  //     "js": ["js/jquery-2.0.3.min.js", "js/addressFetcher.js"],
-  //     "run_at": "document_end",
-  //     "all_frames": false
-  //   }
-  // ],
-
 
 
 // -> INTERFACE
