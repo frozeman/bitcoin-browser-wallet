@@ -467,8 +467,12 @@ var showWallet = function(){
     // add available address to form when clicked
     $wallet.find('.availableAddresses').on('click','button', function(){
         $sendAddress.val($(this).data('address')).trigger('keyup');
-        if($(this).data('amount'))
-            $sendAmount.val($(this).data('amount')).trigger('keyup').focus();
+        if($(this).data('amount')) {
+
+            // add amount in USD or BTC
+            var amount = (bStore.displayUSD) ? inUSD($(this).data('amount')) : $(this).data('amount');
+            $sendAmount.val(amount).trigger('keyup').focus();
+        }
     });
 
     // -> start payment
