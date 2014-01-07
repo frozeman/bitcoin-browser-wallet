@@ -403,9 +403,9 @@ var showWallet = function(){
     
     // -> get balance every 10s
     getPriceIndex();
+    getBalance();
     // run the balance check with a delay of 2s
     intervals.checkBalanceTimeout = setTimeout(function(){
-        getBalance();
         intervals.checkBalance = setInterval(function(){
             // console.log('checking balance...');
             getBalance();

@@ -325,28 +325,13 @@ d[e>>>5]|=128<<24-e%32;d[(e+64>>>9<<4)+14]=h.floor(b/4294967296);d[(e+64>>>9<<4)
 // it under the terms of the MIT license.
 
 
-    // "http://*/",
-    // "https://*/",
-    // "tabs",  
-    // "http://*/*",
-    // "https://*/*",
-
-  // "content_scripts": [
-  //   {
-  //     "matches": ["http://*/*","https://*/*"],
-  //     "js": ["js/jquery-2.0.3.min.js", "js/addressFetcher.js"],
-  //     "run_at": "document_end",
-  //     "all_frames": false
-  //   }
-  // ],
-
 
 
 // -> INTERFACE
 
 // CONSTANTS
 var DECIMAL_POINTS = 100000000,
-    TRANSACTION_FEE = 0.0001;
+    TRANSACTION_FEE = 0.0001; // will be add by blockchain.info, this value here is only for display reasons
 
 // VARS
 var bStore = chrome.extension.getBackgroundPage().storage,
@@ -737,9 +722,9 @@ var showWallet = function(){
     
     // -> get balance every 10s
     getPriceIndex();
+    getBalance();
     // run the balance check with a delay of 2s
     intervals.checkBalanceTimeout = setTimeout(function(){
-        getBalance();
         intervals.checkBalance = setInterval(function(){
             // console.log('checking balance...');
             getBalance();

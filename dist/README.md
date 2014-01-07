@@ -38,6 +38,14 @@ To run the tests, run the following from inside the bitcoin-browser-wallet folde
     $ karma start
 
 
+Deploy
+------
+
+This will create the dist folder, with concatenated and uglified js files.
+
+$ grunt dist
+
+
 
 License
 -------
