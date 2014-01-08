@@ -41,7 +41,7 @@ var i18n = {
             }
         },
         'wallet': {
-            'yourAddress': 'Your Address<br>',
+            'yourAddress': 'My Address<br>',
             'availableAddresses': 'This website contains the following addresses',
             'button': {
                 'send': 'SEND'
@@ -108,7 +108,7 @@ var i18n = {
         },
         'sendConfirm': {
             'sendText': 'Send <span class="amount">0.0</span> to', // dont change the <span class="amount"></span>
-            'feeHint': '0.0001 transaction fee will be add (required by the network).'
+            'feeHint': '0.0001 BTC transaction fee will be add (required by the network).'
         },
         'success': {
             'transactionId': 'Transaction ID:'
@@ -154,7 +154,7 @@ var i18n = {
             }
         },
         'wallet': {
-            'yourAddress': 'Deine Adresse<br>',
+            'yourAddress': 'Meine Adresse<br>',
             'availableAddresses': 'Diese Webseite enthält folgende Adressen',
             'button': {
                 'send': 'SENDEN'
@@ -221,7 +221,7 @@ var i18n = {
         },
         'sendConfirm': {
             'sendText': 'Sende <span class="amount">0.0</span> an', // dont change the <span class="amount"></span>
-            'feeHint': '0.0001 Transaktionsgebühr wird zudem hinzugefügt (vom Netzwerk benötigt).'
+            'feeHint': '0.0001 BTC Transaktionsgebühr wird noch hinzugefügt (vom Netzwerk benötigt).'
         },
         'success': {
             'transactionId': 'Transaktions ID:'
