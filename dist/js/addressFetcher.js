@@ -1,45 +1,44 @@
+// thanks KryptoKit for the regex :), there is no license file in your repo,
+// but you put in on github so i guess it is open source.
 
-// var interval = setInterval(function(){
+var str = document.documentElement.innerHTML,
+    addresses = str.match(/[\s>&"\:][13][1-9A-HJ-NP-Za-km-z]{26,33}[\s<&"\?\.]/g),
+    linkAddresses = str.match(/bitcoin:[13][1-9A-HJ-NP-Za-km-z]{26,33}\?&?amount=[0-9\.]+/g),
+    btcAdresses = [];
 
-    // fetch all bticoin address links
-    var links =  $('a[href^="bitcoin:"]'),
-        bitMonetLinks = $('#bitmonet-iframe'),
-        btcAdresses = [];
+addresses = _.union(addresses, linkAddresses);
 
-    // uses bitmonet iframe (DOESNT WORK)
-    if(bitMonetLinks.length > 0)
-        links = bitMonetLinks.contents().find('a[href^="bitcoin:"]');
 
-    if(links.length > 0) {
-        // clearInterval(interval);
+for ( i in addresses ) {
+    if(addresses[i]) {
 
-        _.each(links, function(link){
-            var href = $(link).attr('href');
+        var foundAddress = addresses[i].match(/[13][1-9A-HJ-NP-Za-km-z]{26,33}/g);
+        var foundAmount = addresses[i].match(/=[0-9\.]+/g);
 
-            if(href && href.indexOf('bitcoin:') != -1) {
-                // get address
-                href  = href.replace(/bitcoin\:/i,'').split('?');
-                // get amount
-                if(href[1]) {
-                    href[1] = href[1].split('&');
-                    href[1] = _.find(href[1], function(item){
-                        return (item.indexOf('amount') != -1) ? true : false;
-                    });
-                    href[1] = (href[1]) ? href[1].split('=') : false;
-                    href[1] = (href[1] && href[1][1]) ? href[1][1].replace(',','.') : 0;
-                } else
-                    href[1] = 0;
 
-                btcAdresses.push({
-                    address: href[0],
-                    amount: parseFloat(href[1])
-                });
-            }
-        });
+        if(foundAmount)
+            foundAmount = foundAmount[0].replace("=", "").replace(',','.');
 
-        // console.log(links, btcAdresses);
+        // add the address
+        if(!_.find(btcAdresses, function(storedAddress){ return (storedAddress.address == foundAddress[0]) ? true : false; })) {
+            btcAdresses.push({
+                address: foundAddress[0],
+                amount: (foundAmount) ? parseFloat(foundAmount) : 0
+            });
 
-        // send the adresses to the extension
-        chrome.runtime.sendMessage({btcAdresses: btcAdresses});
+        // add the amount, when already present
+        } else if(foundAmount) {
+            btcAdresses = _.map(btcAdresses, function(storedAddress){
+                if (storedAddress.address == foundAddress[0]) {
+                    storedAddress.amount = parseFloat(foundAmount);
+                }
+
+                return storedAddress;
+            })
+        }
     }
-// }, 10000);
+}
+
+
+// send the adresses to the extension
+chrome.runtime.sendMessage({btcAdresses: btcAdresses});

@@ -9,6 +9,9 @@ chrome = {
     runtime: {
         onMessage: {
             addListener: emptyFunction
+        },
+        sendMessage: function(){
+            
         }
     },
     extension: {
