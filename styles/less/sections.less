@@ -40,6 +40,10 @@
     .importPrivkey {
         display: none;
     }
+
+    #readPrivKey {
+        display: none;
+    }
 }
 
 #settings {
@@ -62,6 +66,21 @@
         position: absolute;
         top: @padding;
         right: @padding/2;
+    }
+
+    div.privateKeyQrcode {
+        float: right;
+        padding-bottom: @padding * 2;
+    }
+
+    .deleteWallet {
+        div.privateKeyQrcode {
+            float: none;
+            position: relative;
+            left: 50%;
+            top: -36px;
+            margin-left: -82px;
+        }
     }
 
     > section.form {
@@ -181,28 +200,39 @@
         top: @padding/2;
         right: @padding/3;
     }
+    button.qrcode {
+        z-index: 20;
+        position: absolute;
+        top: @padding/2;
+        right: @padding * 3;
+    }
 
-    #qrcode {
+    #walletAddressQrcode {
         // display: none;
         opacity: 0;
         z-index: -1;
         position: absolute;
-        left: 75px;
-        top: 15px;
-        padding: 25px;
+        right: 256px;
+        top: 4px;
+        padding: 8px;
         background-color: #fff;
-        .box-shadow(0 0 8px rgba(0,0,0,0.5));
+        .box-shadow(0 0 5px rgba(0,0,0,0.5));
         .border-radius(4px);
 
         .transition-property(opacity z-index);
-        .transition-delay(0 600ms);
-        .transition-duration(600ms);
+        .transition-delay(0 400ms);
+        .transition-duration(400ms);
 
         &.show {
             opacity: 1;
             z-index: 99;
 
             .transition-delay(0);
+        }
+
+        span {
+            font-size: 14px;
+            margin-bottom: 10px;
         }
     }
 
@@ -228,9 +258,9 @@
         }
 
         span.number {
-            font-size: 40px;
+            font-size: 38px;
             font-weight: 100;
-            
+            line-height: 62px;
         }
         span.symbol {
             font-size: 12px;
@@ -239,28 +269,37 @@
         div.yourAddress {
             position: absolute;
             right: @padding;
-            top: 22px;
+            top: 32px;
             text-align: right;
             font-family: @standardFont;
 
             font-size: 11px;
+            line-height: 14px;
             color: @greyColor;
 
             > span {
                 .user-select(none);
             }
 
-            i.icon-qrcode {
-                font-size: 16px;
-            }
-
             a,
             a:visited {
+                position: absolute;
+                right: 0;
+                display: inline-block;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                width: 100px;
                 color: #444;
+                font-family: @monospacefont;
+
+                .transition(width 300ms);
 
                 &:focus,
-                &:hover {
+                &:hover,
+                &.show {
                     color: @tintColor;
+                    width: 250px;
                 }
             }
         }

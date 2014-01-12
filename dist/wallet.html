@@ -22,6 +22,11 @@
                 <input type="password" class="password" placeholder="Password" tabindex="4">
                 <input type="password" class="passwordConfirm" placeholder="Confirm password" tabindex="5">
                 <button class="create" tabindex="6" data-i18n="setup.button.create"></button>
+
+
+                <div id="readPrivKey" style="width: 200px; height: 200px;">
+                    
+                </div>
             </section>
 
             <section class="message">
@@ -53,6 +58,7 @@
         <section id="wallet">
 
             <button class="icon settings"><span class="icon-cog"></span></button>
+            <button class="icon qrcode"><span class="icon-qrcode"></span></button>
             
             <section class="balance">
                 <button class="switchCurrency" tabindex="4">
@@ -60,8 +66,11 @@
                     <span class="symbol">BTC</span>
                 </button>
                 <div class="yourAddress">
-                    <span data-i18n="wallet.yourAddress"></span>                    
-                    <a href="#" target="_blank" tabindex="4" class="publicKey"></a>
+                    <span data-i18n="wallet.yourAddress"></span>
+                    <a href="#" target="_blank" tabindex="4" class="walletAddress"></a>
+                </div>
+
+                <div id="walletAddressQrcode">
                 </div>
             </section>
 
@@ -163,6 +172,9 @@
                         <input type="text" class="btcAddress privKey" disabled="disabled" spellcheck="false">
                         <p data-i18n="settings.privateKeyInfo"></p>
                         <button class="ok"  tabindex="7" data-i18n="button.ok"></button>
+
+                        <div class="privateKeyQrcode">
+                        </div>
                     </div>
 
                     <div class="deleteWallet">
@@ -171,8 +183,12 @@
                         <br><br>
                         <button class="confirm" tabindex="7" data-i18n="button.confirm"></button>
                         <button class="cancel" tabindex="8" data-i18n="button.cancel"></button>
+
+                        <div class="privateKeyQrcode">
+                        </div>
                     </div>
                 </section>
+                
 
                 <section class="message">
                     <!-- errors -->
@@ -224,6 +240,9 @@
         <script src="js/vendor/bitcoinjs-min.js"></script>
         <script src="js/vendor/sha256.js"></script>
         <script src="js/vendor/aes.js"></script>
+        <script src="js/vendor/qrcode.min.js"></script>
+        <!-- <script src="js/vendor/html5-qrcode.min.js"></script> -->
+        <!-- <script src="js/vendor/jsqrcode-combined.min.js"></script> -->
         <script src="js/bitcoin-browser-wallet.min.js"></script>
         
     </body>

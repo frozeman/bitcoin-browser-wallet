@@ -99,6 +99,18 @@ var showSetup = function(){
             $setup.find('input.importPrivkey').show();
             importPrivKey = true;
         }
+
+
+        // add qrcode scanner
+        // $('#readPrivKey').html5_qrcode(function(data){
+        //          // do something when code is read
+        //     },
+        //     function(error){
+        //         //show read errors 
+        //     }, function(videoError){
+        //         //the video stream could be opened
+        //     }
+        // );
     });
     $setup.find('input.generatePrivRadio').on('change', function(){
         if($(this).val()) {
@@ -246,6 +258,7 @@ var showSettings = function(){
        $('#settingsConfirm').hide().find('.deleteWalletText, .showPrivateKeyText').hide();
        $('#settingsConfirm').find('input.login').val('');
        $settings.find('#settingsConfirm .passwordWrong').hide();
+       $('div.privateKeyQrcode').empty().attr('title','');
        deleteWallet = false;
     });
 
@@ -266,6 +279,18 @@ var showSettings = function(){
 
             $('#settingsConfirm').hide().find('.deleteWalletText, .showPrivateKeyText').hide();
             $showKey.show().find('input.privKey').val(decodedPrivKey);
+
+            // show private key QRCODE
+            if($('div.privateKeyQrcode canvas').length === 0) {
+                var qrcode = new QRCode((deleteWallet) ? $('div.privateKeyQrcode')[1] : $('div.privateKeyQrcode')[0], {
+                    text: decodedPrivKey,
+                    width: 190,
+                    height: 190,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            }
 
             // show private key
             if(deleteWallet) {
@@ -333,6 +358,7 @@ var hideSettings = function(){
     $settings.find('input').val('');
     $settings.find('.message > .error, .message > .info').hide();
     $settings.find('*').off('click change keyup keypress');
+    $('div.privateKeyQrcode').empty().attr('title','');
     $settings.hide();
 };
 
@@ -392,16 +418,15 @@ var showWallet = function(){
 
     // display own public key
     $wallet.find('a.walletAddress').text(publicKey).attr('href','http://blockchain.info/address/'+ publicKey);
-    if($('#qrcode canvas').length === 0) {
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: publicKey,
-            width: 128,
-            height: 128,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-    }
+    // as QRCODE
+    var qrcode = new QRCode($('#walletAddressQrcode')[0], {
+        text: publicKey,
+        width: 130,
+        height: 130,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+    });
 
 
     // set the balance on start
@@ -437,11 +462,9 @@ var showWallet = function(){
 
     // ATTACH EVENTS
     // show qr-code
-    $wallet.find('.yourAddress i.icon-qrcode').on('mouseenter', function(){
-        $('#qrcode').addClass('show');
-    });
-    $wallet.find('.yourAddress i.icon-qrcode').on('mouseleave', function(){
-        $('#qrcode').removeClass('show');
+    $wallet.find('button.icon.qrcode, #walletAddressQrcode').on('click', function(){
+        $('#walletAddressQrcode').toggleClass('show');
+        $wallet.find('.yourAddress a').toggleClass('show');
     });
     // show settings
     $wallet.find('button.settings').on('click', function(){
@@ -525,6 +548,8 @@ var hideWallet = function(){
     $wallet.find('.message > *').hide();
     $wallet.find('.message > .error, .message > .info').hide();
     $wallet.find('*').off('click keyup keypress change');
+    $('#walletAddressQrcode').empty().attr('title','').removeClass('show');
+    $wallet.find('.yourAddress a').removeClass('show');
     $wallet.hide();
 };
 

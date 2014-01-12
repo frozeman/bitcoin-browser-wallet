@@ -11,7 +11,7 @@ chrome = {
             addListener: emptyFunction
         },
         sendMessage: function(){
-            
+
         }
     },
     extension: {
@@ -27,6 +27,12 @@ chrome = {
             get: emptyFunction
         }
     }
+};
+
+// qr code
+var QRCode = function(){};
+QRCode.CorrectLevel = {
+    H: ''
 };
 
 
