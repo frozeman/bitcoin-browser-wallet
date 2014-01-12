@@ -337,6 +337,42 @@ var hideSettings = function(){
 };
 
 
+// -> FETCH BTC ADDRESSES FROM CURRENT TAB
+
+// fetch BTC address from the current tab
+chrome.tabs.executeScript(null, {file:"/js/vendor/underscore-min.js"}, function() {
+    chrome.tabs.executeScript(null, {file:"/js/vendor/jquery-2.0.3.min.js"}, function(){
+        chrome.tabs.executeScript(null, { file: "/js/addressFetcher.js"});
+    });
+});
+// retrieve addresses
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    // console.log(sender.tab ?
+    //             "from a content script:" + sender.tab.url :
+    //             "from the extension", request.btcAdresses);
+
+    // when addresses were received, add them to a list
+    if(!_.isEmpty(request.btcAdresses)) {
+
+        setTimeout(function(){
+            var $availableAddresses = $('#wallet').find('.availableAddresses');
+            _.each(request.btcAdresses, function(btcAdresses){
+                var $button = $('<button><span class="icon-qrcode"></span><span class="text"></span></button>');
+
+                // append to the list
+                $availableAddresses.children('ul').append($('<li>').append($button));
+
+                // add address
+                $button.data('address', btcAdresses.address).find('span.text').text(' '+ btcAdresses.address);
+
+                if(btcAdresses.amount > 0)
+                    $button.data('amount', btcAdresses.amount).append(' > '+ btcAdresses.amount +' BTC');
+
+            });
+            $availableAddresses.show();
+        }, 200);
+    }
+});
 
 
 /**
@@ -353,49 +389,19 @@ var showWallet = function(){
     // show
     $wallet.show();
 
-    // DEV
-    // showSuccess('8e0e21ef77a73d30fe5e1bc52809c1e67fd5c6c929d8efacb6e6b70e99e75bde');
-
-    // -> FETCH BTC ADDRESSES FROM CURRENT TAB
-
-    // fetch BTC address from the current tab
-    chrome.tabs.executeScript(null, {file:"/js/vendor/underscore-min.js"}, function() {
-        chrome.tabs.executeScript(null, {file:"/js/vendor/jquery-2.0.3.min.js"}, function(){
-            chrome.tabs.executeScript(null, { file: "/js/addressFetcher.js"});
-        });
-    });
-    // retrieve addresses
-    chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-        // console.log(sender.tab ?
-        //             "from a content script:" + sender.tab.url :
-        //             "from the extension", request.btcAdresses);
-
-        // when addresses were received, add them to a list
-        if(!_.isEmpty(request.btcAdresses)) {
-
-            setTimeout(function(){
-                var $availableAddresses = $wallet.find('.availableAddresses');
-                _.each(request.btcAdresses, function(btcAdresses){
-                    var $button = $('<button><span class="icon-qrcode"></span><span class="text"></span></button>');
-
-                    // append to the list
-                    $availableAddresses.children('ul').append($('<li>').append($button));
-
-                    // add address
-                    $button.data('address', btcAdresses.address).find('span.text').text(' '+ btcAdresses.address);
-
-                    if(btcAdresses.amount > 0)
-                        $button.data('amount', btcAdresses.amount).append(' > '+ btcAdresses.amount +' BTC');
-
-                });
-                $availableAddresses.show();
-            }, 200);
-        }
-    });
-    
 
     // display own public key
-    $wallet.find('a.publicKey, a.walletAddress').text(publicKey).attr('href','http://blockchain.info/address/'+ publicKey);
+    $wallet.find('a.walletAddress').text(publicKey).attr('href','http://blockchain.info/address/'+ publicKey);
+    if($('#qrcode canvas').length === 0) {
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: publicKey,
+            width: 128,
+            height: 128,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    }
 
 
     // set the balance on start
@@ -430,6 +436,13 @@ var showWallet = function(){
 
 
     // ATTACH EVENTS
+    // show qr-code
+    $wallet.find('.yourAddress i.icon-qrcode').on('mouseenter', function(){
+        $('#qrcode').addClass('show');
+    });
+    $wallet.find('.yourAddress i.icon-qrcode').on('mouseleave', function(){
+        $('#qrcode').removeClass('show');
+    });
     // show settings
     $wallet.find('button.settings').on('click', function(){
         showSettings();

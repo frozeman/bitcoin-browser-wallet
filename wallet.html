@@ -60,9 +60,12 @@
                     <span class="symbol">BTC</span>
                 </button>
                 <div class="yourAddress">
-                    <span data-i18n="wallet.yourAddress"></span>                    
-                    <a href="#" target="_blank" tabindex="4" class="publicKey"></a>
+                    <i class="icon-qrcode"></i>&nbsp;                 
+                    <span data-i18n="wallet.yourAddress"></span>
+                    <a href="#" target="_blank" tabindex="4" class="walletAddress"></a>
                 </div>
+
+                <div id="qrcode"></div>
             </section>
 
 
@@ -224,6 +227,7 @@
         <script src="js/vendor/bitcoinjs-min.js"></script>
         <script src="js/vendor/sha256.js"></script>
         <script src="js/vendor/aes.js"></script>
+        <script src="js/vendor/qrcode.min.js"></script>
         <script src="js/i18n.js"></script>
         <script src="js/wallet.js"></script>
     </body>

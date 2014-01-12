@@ -952,6 +952,44 @@ button.icon:hover {
   top: 5px;
   right: 3.3333333333333335px;
 }
+#wallet #qrcode {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  left: 75px;
+  top: 15px;
+  padding: 25px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+  -webkit-border-radius: 4px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 4px;
+  -moz-background-clip: padding;
+  border-radius: 4px;
+  background-clip: padding-box;
+  -webkit-transition-property: opacity, z-index;
+  -moz-transition-property: opacity, z-index;
+  -o-transition-property: opacity, z-index;
+  transition-property: opacity, z-index;
+  -webkit-transition-delay: 0, 600ms;
+  -moz-transition-delay: 0, 600ms;
+  -o-transition-delay: 0, 600ms;
+  transition-delay: 0, 600ms;
+  -webkit-transition-duration: 600ms;
+  -moz-transition-duration: 600ms;
+  -o-transition-duration: 600ms;
+  transition-duration: 600ms;
+}
+#wallet #qrcode.show {
+  opacity: 1;
+  z-index: 99;
+  -webkit-transition-delay: 0;
+  -moz-transition-delay: 0;
+  -o-transition-delay: 0;
+  transition-delay: 0;
+}
 #wallet .balance {
   position: relative;
   padding: 10px;
@@ -982,7 +1020,7 @@ button.icon:hover {
 #wallet .balance div.yourAddress {
   position: absolute;
   right: 10px;
-  top: 26px;
+  top: 22px;
   text-align: right;
   font-family: Helvetica, Arial, Verdana;
   font-size: 11px;
@@ -993,6 +1031,9 @@ button.icon:hover {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+#wallet .balance div.yourAddress i.icon-qrcode {
+  font-size: 16px;
 }
 #wallet .balance div.yourAddress a,
 #wallet .balance div.yourAddress a:visited {
