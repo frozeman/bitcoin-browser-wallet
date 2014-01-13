@@ -95,10 +95,8 @@ var showSetup = function(){
             $setup.find('button.create').trigger('click');
     });
     $setup.find('input.importPrivRadio').on('change', function(){
-        if($(this).val()) {
-            $setup.find('input.importPrivkey').show();
-            importPrivKey = true;
-        }
+        $setup.find('input.importPrivkey').show();
+        importPrivKey = true;
 
 
         // add qrcode scanner
@@ -113,10 +111,8 @@ var showSetup = function(){
         // );
     });
     $setup.find('input.generatePrivRadio').on('change', function(){
-        if($(this).val()) {
-            $setup.find('input.importPrivkey').hide();
-            importPrivKey = false;
-        }
+        $setup.find('input.importPrivkey').hide();
+        importPrivKey = false;
     });
 
     // CREATE ACCOUNT
