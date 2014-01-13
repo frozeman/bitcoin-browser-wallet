@@ -107,7 +107,8 @@ var i18n = {
             }
         },
         'sendConfirm': {
-            'sendText': 'Send <span class="amount">0.0</span> to', // dont change the <span class="amount"></span>
+            'send': 'Send',
+            'to': 'To',
             'feeHint': '0.0001 BTC transaction fee will be add (required by the network).'
         },
         'success': {
@@ -199,7 +200,7 @@ var i18n = {
                         'Website: <a href="http://frozeman.de/blog/2014/01/bitcoin-browser-wallet" target="_blank">frozeman.de/blog/2014/01/bitcoin-browser-wallet</a><br>'+
                         'Feedback: <a href="mailto:bitcoin@frozeman.de" target="_blank">bitcoin@frozeman.de</a><br>'+
                         'Bugs: <a href="http://github.com/frozeman/bitcoin-browser-wallet/issues" target="_blank">Github</a><br><br>'+
-                        'Um dieses Projekt zu unterstützen sende einfach ein paar (milli) Bitcoin an <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a>'+
+                        'Um dieses Projekt zu unterstützen sende einfach ein paar (milli) Bitcoin an <a href="#" class="donate">17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm</a><br><br>'+
                         'Diese Software verwendet Google Analytics welche öffentlich zugänglich sind: <a href="http://www.seethestats.com/site/bitcoin-browser-wallet.com" target="_blank">seethestats.com</a>'+
                         '<i>Der Tracking-Code sitzt im background script der Erweiterung und kann nicht auf dein Wallet Popup zugreifen.</i>',
             
@@ -220,7 +221,8 @@ var i18n = {
             }
         },
         'sendConfirm': {
-            'sendText': 'Sende <span class="amount">0.0</span> an', // dont change the <span class="amount"></span>
+            'send': 'Sende',
+            'to': 'An',
             'feeHint': '0.0001 BTC Transaktionsgebühr wird noch hinzugefügt (vom Netzwerk benötigt).'
         },
         'success': {
@@ -1298,7 +1300,8 @@ var displayBalance = function(){
         $wallet.find('input.sendAmount').attr('placeholder','0.00000000');
         $wallet.find('input.sendAmount').attr('step','0.001');
     }
-    $wallet.find('button.switchCurrency').attr('title','Bitstamp: '+ bStore.currentPrice +' USD/BTC');
+    $wallet.find('span.currentPrice').text('Bitstamp '+ bStore.currentPrice +' USD/BTC');
+    $wallet.find('button.switchCurrency').attr('title','Bitstamp '+ bStore.currentPrice +' USD/BTC');
 };
 
 /**

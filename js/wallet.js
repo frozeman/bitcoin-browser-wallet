@@ -784,7 +784,8 @@ var displayBalance = function(){
         $wallet.find('input.sendAmount').attr('placeholder','0.00000000');
         $wallet.find('input.sendAmount').attr('step','0.001');
     }
-    $wallet.find('button.switchCurrency').attr('title','Bitstamp: '+ bStore.currentPrice +' USD/BTC');
+    $wallet.find('span.currentPrice').text('Bitstamp '+ bStore.currentPrice +' USD/BTC');
+    $wallet.find('button.switchCurrency').attr('title','Bitstamp '+ bStore.currentPrice +' USD/BTC');
 };
 
 /**

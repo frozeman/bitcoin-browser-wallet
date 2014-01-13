@@ -912,11 +912,11 @@ button.icon:hover {
   color: #ae543a;
 }
 #sendConfirm p {
-  line-height: 22px;
   margin: 8px 0;
+  margin-top: 15px;
+  line-height: 25px;
 }
 #sendConfirm p small {
-  line-height: 14px;
   color: #ddd;
 }
 #sendConfirm .amount,
@@ -924,7 +924,9 @@ button.icon:hover {
   font-weight: 400;
 }
 #sendConfirm .amount {
-  font-size: 20px;
+  font-size: 28px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, Verdana;
+  font-weight: 100;
 }
 #success {
   z-index: 32;
@@ -1041,6 +1043,14 @@ button.icon:hover {
 #wallet .balance span.symbol {
   font-size: 12px;
   font-weight: 200;
+}
+#wallet .balance span.currentPrice {
+  position: absolute;
+  left: 20px;
+  top: 8px;
+  font-weight: 200;
+  font-size: 12px;
+  color: #b9b9b9;
 }
 #wallet .balance div.yourAddress {
   position: absolute;

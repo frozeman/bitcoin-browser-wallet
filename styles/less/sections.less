@@ -143,11 +143,12 @@
 #sendConfirm {
 
     p {
-        line-height: @fontSizeMedium + 4;
         margin: 8px 0;
+        margin-top: 15px;
+        line-height: 25px;
 
         small {
-            line-height: @fontSizeMedium - 4;
+            // line-height: @fontSizeMedium - 4;
             color: #ddd;
         }
     }
@@ -157,7 +158,9 @@
         font-weight: 400;
     }
     .amount {
-        font-size: @fontSizeLarge;
+        font-size: 28px;
+        font-family: @numberFont;
+        font-weight: 100;
     }
 }
 
@@ -241,7 +244,7 @@
         padding: @padding;
         width: @width - @padding * 2;
         text-align: left;
-        font-family: 'Helvetica Neue', Helvetica, Arial, Verdana;
+        font-family: @numberFont;
 
 
         button.switchCurrency {
@@ -265,6 +268,14 @@
         span.symbol {
             font-size: 12px;
             font-weight: 200;
+        }
+        span.currentPrice {
+            position: absolute;
+            left: @padding * 2;
+            top: @padding - 2px;
+            font-weight: 200;
+            font-size: 12px;
+            color: @greyColor;
         }
         div.yourAddress {
             position: absolute;
