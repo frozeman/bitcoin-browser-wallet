@@ -70,7 +70,6 @@
 
     div.privateKeyQrcode {
         float: right;
-        padding-bottom: @padding * 2;
     }
 
     .deleteWallet {
@@ -78,7 +77,7 @@
             float: none;
             position: relative;
             left: 50%;
-            top: -36px;
+            margin-top: -36px;
             margin-left: -82px;
         }
     }
@@ -105,7 +104,7 @@
     left: 0;
     right: 0;
     padding: @padding / 2  @padding * 2;
-    background-color: #fff;
+    background-color: @bgColorTransparent;
 }
 
 #settingsConfirm {
@@ -149,7 +148,7 @@
 
         small {
             // line-height: @fontSizeMedium - 4;
-            color: #ddd;
+            color: #999;
         }
     }
 
@@ -166,7 +165,6 @@
 
 #success {
     z-index: 32;
-    background-color: @bgColorTransparent;
     text-align: center;
 
     h2 {

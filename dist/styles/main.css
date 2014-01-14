@@ -803,7 +803,7 @@ button.icon:hover {
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(246, 246, 246, 0.75);
+  background-color: rgba(249, 249, 249, 0.75);
 }
 #loading span {
   position: absolute;
@@ -855,13 +855,12 @@ button.icon:hover {
 }
 #settings div.privateKeyQrcode {
   float: right;
-  padding-bottom: 20px;
 }
 #settings .deleteWallet div.privateKeyQrcode {
   float: none;
   position: relative;
   left: 50%;
-  top: -36px;
+  margin-top: -36px;
   margin-left: -82px;
 }
 #settings > section.form {
@@ -882,7 +881,7 @@ button.icon:hover {
   left: 0;
   right: 0;
   padding: 5px 20px;
-  background-color: #fff;
+  background-color: rgba(249, 249, 249, 0.95);
 }
 #settingsConfirm {
   padding-top: 20px;
@@ -917,7 +916,7 @@ button.icon:hover {
   line-height: 25px;
 }
 #sendConfirm p small {
-  color: #ddd;
+  color: #999;
 }
 #sendConfirm .amount,
 #sendConfirm .address {
@@ -930,7 +929,6 @@ button.icon:hover {
 }
 #success {
   z-index: 32;
-  background-color: rgba(246, 246, 246, 0.95);
   text-align: center;
 }
 #success h2 {
