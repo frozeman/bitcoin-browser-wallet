@@ -630,7 +630,7 @@ button.icon:hover {
   color: #eb8833;
   font-family: 'Helvetica Neue', Helvetica, Arial, Verdana;
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 200;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -645,7 +645,6 @@ button.icon:hover {
 }
 .form input.btcAddress {
   font-family: "Courier New", Courier, monospace;
-  font-weight: 100;
 }
 .form input.sendAmount,
 .form input.passwordConfirm,
@@ -716,10 +715,10 @@ button.icon:hover {
   position: relative;
   display: none;
   padding: 10px;
-  background-color: #e9e9e9;
+  background-color: #ececec;
 }
 .availableAddresses h2 {
-  color: #909090;
+  color: #939393;
   margin-bottom: 5px;
 }
 .availableAddresses ul {
@@ -881,7 +880,7 @@ button.icon:hover {
   left: 0;
   right: 0;
   padding: 5px 20px;
-  background-color: rgba(249, 249, 249, 0.95);
+  background-color: #f9f9f9;
 }
 #settingsConfirm {
   padding-top: 20px;
@@ -1076,6 +1075,7 @@ button.icon:hover {
   white-space: nowrap;
   width: 100px;
   color: #444;
+  font-size: 12px;
   font-family: "Courier New", Courier, monospace;
   -webkit-transition: width 300ms;
   -moz-transition: width 300ms;
