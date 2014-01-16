@@ -117,9 +117,12 @@ describe("showSetup()", function() {
 // SEND TRANSACTION
 describe("showWallet()", function() {
     var jq = jQueryStub,
-        orgCStore = _.clone(cStore);
+        orgCStore = _.clone(cStore),
+        orgshowSendConfirm = showSendConfirm;
 
     beforeEach(function(){
+
+
 
         showWallet();
 
@@ -127,6 +130,7 @@ describe("showWallet()", function() {
     afterEach(function(){
         jQueryStub = jq;
         cStore = orgCStore;
+        showSendConfirm = orgshowSendConfirm;
     });
     it("should show the sendConfirm screen when the send button is pressed", function() {
 
@@ -199,7 +203,7 @@ describe("showSendConfirm()", function() {
         $.ajax = function(options) {
 
             expect(options.data.to).toEqual('17gH3YynN34VVRhwwrnEjfc31LnpP7rcTm');
-            expect(options.data.amount).toEqual(1.0 * DECIMAL_POINTS);
+            expect(options.data.amount).toEqual(1.0 * 100000000);
             expect(options.url.indexOf('5KGMJim4coC9HqZuXw9pNpm8GyVw5tffD2mXEGXUdpBQvzAurw4')).not.toEqual(-1);
 
             return {

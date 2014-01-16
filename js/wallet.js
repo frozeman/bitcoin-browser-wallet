@@ -559,16 +559,18 @@ var hideWallet = function(){
 var showSendConfirm = function(address, amount){
     var $sendConfirm = $('#sendConfirm');
 
-
-    // make sure its not more than 8 decimal points
-    amount = roundBTC(amount);
-
+    if(!_.isFinite(amount))
+        amount = 0;
 
     // show
     $sendConfirm.show();
-    $sendConfirm.find('input.login').focus();
-    $sendConfirm.find('span.amount').text(amount +' BTC ('+ inUSD(amount) +' USD)');
+    if(bStore.displayUSD)
+        $sendConfirm.find('span.amount').text(round(inUSD(amount),2) +' USD ('+ round(amount,8) +' BTC)');
+    else
+        $sendConfirm.find('span.amount').text(round(amount,8) +' BTC ('+ round(inUSD(amount),2) +' USD)');
+
     $sendConfirm.find('a.address').text(address).attr('href','http://blockchain.info/address/'+ address);
+    $sendConfirm.find('input.login').focus();
 
 
 
@@ -585,7 +587,6 @@ var showSendConfirm = function(address, amount){
     // -> SEND PAYMENT
     $sendConfirm.find('button.confirm').on('click', function(){
         $wallet = $('#wallet');
-
         // prevent "double spends"
         if(!bStore.paymentInProcess) {
             var decodedPrivKey;
@@ -752,10 +753,6 @@ var getPriceIndex = function(){
 var displayBalance = function(){
     var $wallet = $('#wallet');
 
-    // ake sure there is a number balance
-    if(!bStore.balance)
-        bStore.balance = 0;
-
 
     // show message to load wallet
     if(bStore.balance)
@@ -772,19 +769,19 @@ var displayBalance = function(){
 
     // display USD or BTC
     if(bStore.displayUSD) {
-        $wallet.find('.balance .number').text(inUSD(bStore.balance));
+        $wallet.find('.balance .number').text(round(inUSD(bStore.balance),2));
         $wallet.find('.balance .symbol').text('USD');
         $wallet.find('button.symbol').text('USD');
         $wallet.find('input.sendAmount').attr('placeholder','0.00');
         $wallet.find('input.sendAmount').attr('step','0.01');
     } else {
-        $wallet.find('.balance .number').text(bStore.balance);
+        $wallet.find('.balance .number').text(round(bStore.balance,8));
         $wallet.find('.balance .symbol').text('BTC');
         $wallet.find('button.symbol').text('BTC');
         $wallet.find('input.sendAmount').attr('placeholder','0.00000000');
         $wallet.find('input.sendAmount').attr('step','0.001');
     }
-    $wallet.find('span.currentPrice').text(bStore.currentPrice +' USD/BTC').attr('title','Bitstamp.net');
+    $wallet.find('span.currentPrice').text(round(bStore.currentPrice,2) +' USD/BTC').attr('title','Bitstamp.net');
 };
 
 /**
@@ -803,12 +800,17 @@ var inBTC = function(fiat){
     return Math.round((fiat / bStore.currentPrice) * DECIMAL_POINTS) / DECIMAL_POINTS;
 };
 
+
 /**
-* Makes sure that BTC will "only" have 8 decimal points.
+* Round to decimal points
 *
 */
-var roundBTC = function(btc){
-    return Math.round((btc) * DECIMAL_POINTS) / DECIMAL_POINTS;
+var round = function(number, decimal){
+    if(_.isFinite(number)) {
+        return (number * 1).toFixed(decimal);
+    } else {
+        return 0;
+    }
 };
 
 
