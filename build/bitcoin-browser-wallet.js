@@ -1121,7 +1121,7 @@ var showSendConfirm = function(address, amount){
                     url: 'https://blockchain.info/merchant/'+ decodedPrivKey +'/payment',
                     data: {
                         to: address,
-                        amount: amount * DECIMAL_POINTS 
+                        amount: parseInt(amount * DECIMAL_POINTS)
                     }
                 })
                 .always(function(){
