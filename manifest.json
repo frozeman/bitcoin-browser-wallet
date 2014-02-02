@@ -4,7 +4,7 @@
   "name": "Bitcoin Browser Wallet Dev",
   "short_name": "BTC Wallet",
   "description": "A simple bitcoin wallet for your browser.",
-  "version": "0.2.9",
+  "version": "0.2.8",
   "icons": {
       "16": "icon16.png",
       "48": "icon48.png",
@@ -18,7 +18,7 @@
     "https://*/*",
     "https://blockchain.info/merchant/*/*"
   ],
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "background": {
     "scripts": ["js/background.js"]
   },
