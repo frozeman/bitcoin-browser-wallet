@@ -603,36 +603,44 @@ var showSendConfirm = function(address, amount){
                 bStore.paymentInProcess = true;
                 $('#loading').show();
 
-                // -> SEND TRANSACTION VIA BLOCKCHAIN.INFO
+                
+
+                // GET TRANSACTION HISTORY
                 $.ajax({
-                    url: 'https://blockchain.info/merchant/'+ decodedPrivKey +'/payment',
-                    data: {
-                        to: address,
-                        amount: parseInt(amount * DECIMAL_POINTS)
-                    }
+                    url: 'http://blockexplorer.com/q/mytransactions/'+ publicKey
                 })
-                .always(function(){
-                    bStore.paymentInProcess = false;
-                    $('#loading').hide();
-                    hideSendConfirm();
-                })
-                .done(function(response){
+                .done(function(txHistory){
 
-                    // stringify if thats not happened
-                    if(_.isString(response))
-                        response = JSON.parse(response);
+                    var result = parseTxs(txHistory, publicKey),
+                        tx = createSend(address, publicKey, amount, TRANSACTION_FEE, result.unspenttxs, decodedPrivKey),
+                        rawTransaction = Crypto.util.bytesToHex(tx.serialize());
+                    decodedPrivKey = null;
 
-                    // show SUCCESS
-                    if(_.isObject(response) && _.isEmpty(response.error) && !_.isEmpty(response.tx_hash)) {
+
+                    // BROADCAST TRANSACTION TO THE BLOCKCHAIN
+                    $.ajax({
+                        url: 'https://blockchain.info/pushtx',
+                        type: 'POST',
+                        data: {
+                            tx: rawTransaction
+                        }
+                    })
+                    .always(function(){
+                        bStore.paymentInProcess = false;
+                        $('#loading').hide();
+                        hideSendConfirm();
+                    })
+                    .done(function(response){
 
                         // successful, show transaction id
-                        showSuccess(response.tx_hash);
+                        console.log('SUCCESS', response);
+                        // showSuccess(response.tx_hash);
 
                         // update the balance in the background
                         bStore.balance = bStore.balance - amount - TRANSACTION_FEE;
                         displayBalance();
 
-                        // store first send done
+                        // store "first send done"
                         chrome.runtime.lastError = null;
                         cStore.set({ firstSend: true }, function(){
                             if(!chrome.runtime.lastError) {
@@ -641,16 +649,73 @@ var showSendConfirm = function(address, amount){
                             }
                         });
 
-                    // show ERROR
-                    } else {
-                        $wallet.find('.transactionFailed > p').text(response.error);
-                        $wallet.find('.transactionFailed').show();
-                    }
+
+                    })
+                    .fail(function(request){
+                        console.log('error', request.responseText);
+                        $wallet.find('.transactionFailed > p').text(request.responseText).parent().show();
+                    });
+
 
                 })
                 .fail(function(){
                     $wallet.find('.transactionRequestFailed').show();
-                });
+                    
+                    bStore.paymentInProcess = false;
+                    $('#loading').hide();
+                    hideSendConfirm();
+                })
+
+
+
+                // // -> SEND TRANSACTION VIA BLOCKCHAIN.INFO
+                // $.ajax({
+                //     url: 'https://blockchain.info/merchant/'+ decodedPrivKey +'/payment',
+                //     data: {
+                //         to: address,
+                //         amount: parseInt(amount * DECIMAL_POINTS)
+                //     }
+                // })
+                // .always(function(){
+                //     bStore.paymentInProcess = false;
+                //     $('#loading').hide();
+                //     hideSendConfirm();
+                // })
+                // .done(function(response){
+
+                //     // stringify if thats not happened
+                //     if(_.isString(response))
+                //         response = JSON.parse(response);
+
+                //     // show SUCCESS
+                //     if(_.isObject(response) && _.isEmpty(response.error) && !_.isEmpty(response.tx_hash)) {
+
+                //         // successful, show transaction id
+                //         showSuccess(response.tx_hash);
+
+                //         // update the balance in the background
+                //         bStore.balance = bStore.balance - amount - TRANSACTION_FEE;
+                //         displayBalance();
+
+                //         // store first send done
+                //         chrome.runtime.lastError = null;
+                //         cStore.set({ firstSend: true }, function(){
+                //             if(!chrome.runtime.lastError) {
+                //                 firstSend = true;
+                //                 displayBalance();
+                //             }
+                //         });
+
+                //     // show ERROR
+                //     } else {
+                //         $wallet.find('.transactionFailed > p').text(response.error);
+                //         $wallet.find('.transactionFailed').show();
+                //     }
+
+                // })
+                // .fail(function(){
+                //     $wallet.find('.transactionRequestFailed').show();
+                // });
 
 
 
@@ -659,8 +724,6 @@ var showSendConfirm = function(address, amount){
                 hideSendConfirm();
                 $wallet.find('.passwordWrong').show();
             }
-
-            decodedPrivKey = null;
         }
 
     });
@@ -901,3 +964,232 @@ var validateAddress = function(address){
         return false;
     }
 };
+
+
+/**
+* Parses the transaction history
+*
+*/
+var parseTxs = function(data, address) {
+    /* JSON structure:
+        root
+         transaction hash
+            hash (same as above)
+            version
+            number of inputs
+            number of outputs
+            lock time
+            size (bytes)
+            inputs
+             previous output
+                hash of previous transaction
+                index of previous output
+             scriptsig (replaced by "coinbase" on generation inputs)
+             sequence (only when the sequence is non-default)
+             address (on address transactions only!)
+            outputs
+             value
+             scriptpubkey
+             address (on address transactions only!)
+            block hash
+            block number
+            block time
+    */
+    var tmp = JSON.parse(data);
+    var txs = [];
+    for (var a in tmp) {
+        if (!tmp.hasOwnProperty(a))
+            continue;
+        txs.push(tmp[a]);
+    }
+
+    
+    // Sort chronologically
+    txs.sort(function(a,b) {
+        if (a.time > b.time) return 1;
+        else if (a.time < b.time) return -1;
+        return 0;
+    })
+
+    delete unspenttxs;
+    var unspenttxs = {}; // { "<hash>": { <output index>: { amount:<amount>, script:<script> }}}
+
+    var balance = BigInteger.ZERO;
+
+    // Enumerate the transactions 
+    for (var a in txs) {
+    
+        if (!txs.hasOwnProperty(a))
+            continue;
+        var tx = txs[a];
+        if (tx.ver != 1) throw "Unknown version found. Expected version 1, found version "+tx.ver;
+        
+        // Enumerate inputs
+        for (var b in tx.in ) {
+            if (!tx.in.hasOwnProperty(b))
+                continue;
+            var input = tx.in[b];
+            var p = input.prev_out;
+            var lilendHash = endian(p.hash)
+            // if this came from a transaction to our address...
+            if (lilendHash in unspenttxs) {
+                unspenttx = unspenttxs[lilendHash];
+                
+                // remove from unspent transactions, and deduce the amount from the balance
+                if(unspenttx[p.n])
+                    balance = balance.subtract(unspenttx[p.n].amount);
+            delete unspenttx[p.n]
+                if (isEmpty(unspenttx)) {
+                    delete unspenttxs[lilendHash]
+                }
+            }
+        }
+        
+        // Enumerate outputs
+        var i = 0;
+        for (var b in tx.out) {
+            if (!tx.out.hasOwnProperty(b))
+                continue;
+                
+            var output = tx.out[b];
+            
+            // if this was sent to our address...
+            if (output.address == address) {
+                // remember the transaction, index, amount, and script, and add the amount to the wallet balance
+                var value = btcstr2bignum(output.value);
+                var lilendHash = endian(tx.hash)
+                if (!(lilendHash in unspenttxs))
+                    unspenttxs[lilendHash] = {};
+                unspenttxs[lilendHash][i] = {amount: value, script: output.scriptPubKey};
+                balance = balance.add(value);
+            }
+            i = i + 1;
+        }
+    }
+    return {balance:balance, unspenttxs:unspenttxs};
+};
+
+
+/**
+* Create raw transaction
+*
+*/
+function createSend(address, changeAddress, sendValue, feeValue, unspenttxs, privKey) {
+    var selectedOuts = [],
+        txValue = sendValue.add(feeValue),
+        availableValue = BigInteger.ZERO;
+
+    sendValue = btcstr2bignum(sendValue);
+    feeValue = btcstr2bignum(feeValue);
+    address = new Bitcoin.Address(address);
+    changeAddress = new Bitcoin.Address(changeAddress);
+    
+    for (var hash in unspenttxs) {
+        if (!unspenttxs.hasOwnProperty(hash))
+            continue;
+        for (var index in unspenttxs[hash]) {
+            if (!unspenttxs[hash].hasOwnProperty(index))
+                continue;
+            var script = parseScript(unspenttxs[hash][index].script);
+            var b64hash = Crypto.util.bytesToBase64(Crypto.util.hexToBytes(hash));
+            selectedOuts.push(new Bitcoin.TransactionIn({outpoint: {hash: b64hash, index: index}, script: script, sequence: 4294967295}));
+            availableValue = availableValue.add(unspenttxs[hash][index].amount);
+            if (availableValue.compareTo(txValue) >= 0) break;
+        }
+    }
+
+    if (availableValue.compareTo(txValue) < 0) {
+      throw new Error('Insufficient funds.');
+    }
+
+
+    var changeValue = availableValue.subtract(txValue);
+
+    var sendTx = new Bitcoin.Transaction();
+
+    for (var i = 0; i < selectedOuts.length; i++) {
+        sendTx.addInput(selectedOuts[i]);
+    }
+    sendTx.addOutput(address, sendValue);
+    if (changeValue.compareTo(BigInteger.ZERO) > 0) {
+        sendTx.addOutput(changeAddress, changeValue);
+    }
+    
+    var hashType = 1; // SIGHASH_ALL
+    // add private key to Bitcoin instance
+    var res = parseBase58Check(privKey),
+        key = new Bitcoin.ECKey(res[1]);
+    
+    for (var i = 0; i < sendTx.ins.length; i++) {
+        var hash = sendTx.hashTransactionForSignature(selectedOuts[i].script, i, hashType);
+        var pubKeyHash = selectedOuts[i].script.simpleOutPubKeyHash();
+        
+        // SIGN with RPIVATE KEY
+        var signature = key.sign(hash);
+
+        // Append hash type
+        signature.push(parseInt(hashType));
+
+        sendTx.ins[i].script = Bitcoin.Script.createInputScript(signature, key.getPub());
+    }
+    
+    return sendTx;
+};
+
+/**
+* endian
+*
+*/
+var endian = function(string) {
+    var out = []
+    for(var i = string.length; i > 0; i-=2) {
+        out.push(string.substring(i-2,i));
+    }
+    return out.join("");
+};
+
+
+/**
+* btcstr2bignum
+*
+*/
+var btcstr2bignum = function(btc) {
+    btc = btc.toString();
+    var i = btc.indexOf('.');
+    var value = new BigInteger(btc.replace(/\./,''));
+    var diff = 9 - (btc.length - i);
+    if (i == -1) {
+        var mul = "100000000";
+    } else if (diff < 0) {
+        return value.divide(new BigInteger(Math.pow(10,-1*diff).toString()));
+    } else {
+        var mul = Math.pow(10,diff).toString();
+    }
+        return value.multiply(new BigInteger(mul));
+};
+
+/**
+* parseScript
+*
+*/
+var parseScript = function(script) {
+    var newScript = new Bitcoin.Script();
+    var s = script.split(" ");
+    for (var i in s) {
+        if (Bitcoin.Opcode.map.hasOwnProperty(s[i])){
+            newScript.writeOp(Bitcoin.Opcode.map[s[i]]);
+        } else {
+            newScript.writeBytes(Crypto.util.hexToBytes(s[i]));
+        }
+    }
+    return newScript;
+}
+
+/**
+* isEmpty
+*
+*/
+function isEmpty(ob) {
+    for(var i in ob){ if(ob.hasOwnProperty(i)){return false;}}
+    return true;
+}
