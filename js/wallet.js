@@ -1075,14 +1075,15 @@ var parseTxs = function(data, address) {
 *
 */
 function createSend(address, changeAddress, sendValue, feeValue, unspenttxs, privKey) {
-    var selectedOuts = [],
-        txValue = sendValue.add(feeValue),
-        availableValue = BigInteger.ZERO;
-
     sendValue = btcstr2bignum(sendValue);
     feeValue = btcstr2bignum(feeValue);
     address = new Bitcoin.Address(address);
     changeAddress = new Bitcoin.Address(changeAddress);
+
+    var selectedOuts = [],
+        txValue = sendValue.add(feeValue),
+        availableValue = BigInteger.ZERO;
+
     
     for (var hash in unspenttxs) {
         if (!unspenttxs.hasOwnProperty(hash))
